@@ -1,48 +1,59 @@
----
-id: dashboard-backend-streamlit-py
-aliases: []
-tags: []
----
+# dashboard-backend-streamlit-py
 
-# Dashboard Backend StreamLit Python
+Streamlit dashboard backend con arquitectura DDD + Hexagonal, listo como seed reutilizable.
 
-## Entrypoint Convention
-This project uses `app.py` as the canonical Streamlit entrypoint.
+![Dashboard Overview](docs/assets/dashboard/overview.png)
 
-Why `app.py` and not `main.py`:
-- In Streamlit, the entrypoint is the file passed to `streamlit run`.
-- Using `app.py` makes intent explicit for UI-first apps and avoids CLI confusion.
+## Quickstart
 
-Run locally:
 ```sh
-make dev
-# or
-python -m streamlit run app.py
+uv sync --group dev
+make run
+make lint
+make test
+make test-watch
 ```
 
-## Setup Virtual Env
+## Architecture
+
+- `src/dashboard/domain` y `src/dashboard/application` encapsulan reglas y casos de uso sin dependencia de Streamlit.
+- Los puertos se definen con `Protocol` en `src/dashboard/application/ports` y se implementan con adaptadores en infraestructura/presentación.
+- `src/dashboard/presentation/streamlit` es un adaptador de UI reemplazable, no parte del core de negocio.
+
+## Quality Gates
+
+- Linting: `ruff`
+- Type checking: `mypy` en modo strict
+- Testing: `pytest`
+- CI: `.github/workflows/quality.yml` ejecuta `make lint` y `make test` en push/PR.
+
+## Seed Baseline
+
+Este repositorio mantiene un baseline estable etiquetado como `seed-v0.1.0`.
+Ese tag marca una semilla reusable (seed) con DDD + Hexagonal + adaptador Streamlit + quality gates.
+
+### Crear un proyecto nuevo desde el seed tag
+
 ```sh
-python -m venv .venv
+git archive --format=tar --prefix=my-new-dashboard/ seed-v0.1.0 | tar -x
+cd my-new-dashboard
+git init
+uv sync --group dev
+make run
 ```
 
-## Env Activation
-```
-source .venv/bin/activate
-```
+Opcional a futuro: crear un repositorio template dedicado. Método oficial actual: iniciar desde el tag seed.
 
+## Screenshots
 
-## Reload Session
-```sh
-exec $SHELL
-```
+Vista general:
 
-## Setup Package Manager
-```sh
-brew install uv
-# uv init
-```
+![Dashboard Hero](docs/assets/dashboard/overview.png)
 
-## Setup Streamlit
-```sh
-uv add streamlit pandas plotly
-```
+Interacción (tooltip/hover):
+
+![Dashboard Tooltip Interaction](docs/assets/dashboard/interaction-tooltip.png)
+
+Captura adicional de referencia:
+
+![Dashboard Home Reference](docs/assets/01-home.png)
