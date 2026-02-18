@@ -85,6 +85,31 @@ make check
   - `PLAYWRIGHT_ARTIFACTS_DIR`
 - Si aún no existen tests `e2e`, el target informa `No e2e tests collected` y finaliza en OK.
 
+## Testing & Coverage
+
+### Sobre `deselected` en pytest
+
+- `pytest -m unit` ejecuta solo tests `unit` y deja el resto como `deselected`.
+- `pytest -m integration` ejecuta solo tests `integration` y deja el resto como `deselected`.
+- Este comportamiento es esperado y no indica error.
+
+### Como interpretar coverage
+
+- El porcentaje de coverage depende del subconjunto de tests ejecutado.
+- Por eso `make test-unit` y `make test-integration` pueden reportar porcentajes globales distintos.
+- Para una vista mas completa del estado actual del repo, usar `make check`.
+
+### Politica de coverage para este seed
+
+- Core (`src/dashboard/domain` + `src/dashboard/application`): objetivo 85-95%.
+- Adapters (`src/dashboard/infrastructure` + `src/dashboard/presentation`): sin objetivo estricto en esta fase seed.
+- Politica global actual: coverage como reporte, sin `fail-under` por ahora.
+- Razon: priorizar evolucion del template/demo y evitar friccion temprana mientras crecen escenarios integration/e2e.
+
+### Evolucion recomendada
+
+- Cuando haya mas flujos reales y e2e estables, evaluar un gate liviano global (por ejemplo 70-80) para prevenir regresiones graves.
+
 ## Seed Baseline
 
 Este repositorio mantiene un baseline estable etiquetado como `seed-v0.1.0`.

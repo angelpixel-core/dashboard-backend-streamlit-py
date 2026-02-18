@@ -15,7 +15,7 @@ format:
 typecheck:
 	uv run mypy src
 
-test-unit: format typecheck lint
+test-unit:
 	uv run pytest -m unit
 
 test-integration:
