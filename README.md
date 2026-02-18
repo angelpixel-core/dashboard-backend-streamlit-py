@@ -10,9 +10,42 @@ Streamlit dashboard backend con arquitectura DDD + Hexagonal, listo como seed re
 uv sync --group dev
 make run
 make lint
+make typecheck
 make test
+make check
 make test-watch
 ```
+
+## Virtual Environment & uv
+
+No es necesario ejecutar manualmente:
+
+```sh
+source .venv/bin/activate
+```
+
+Comandos oficiales del proyecto:
+
+```sh
+make run
+make lint
+make typecheck
+make test
+make check
+```
+
+Todos esos targets usan `uv run` internamente.
+`uv run <command>` ejecuta dentro del entorno virtual correcto sin modificar la
+sesion actual del shell.
+
+Activar el entorno manualmente es opcional y solo tiene sentido para trabajo
+interactivo fuera de `make`, por ejemplo cuando quieras usar directamente
+`python`, `pip` o una REPL.
+
+Detalle tecnico:
+- `source .venv/bin/activate` modifica la sesion actual del shell.
+- Los comandos de `make` corren en subshells y no pueden activar el entorno del shell padre.
+- Por eso este repo estandariza `uv run` como mecanismo de ejecucion.
 
 ## Architecture
 
@@ -22,10 +55,35 @@ make test-watch
 
 ## Quality Gates
 
-- Linting: `ruff`
-- Type checking: `mypy` en modo strict
-- Testing: `pytest`
-- CI: `.github/workflows/quality.yml` ejecuta `make lint` y `make test` en push/PR.
+- Gate atómico de lint: `make lint`
+- Gate atómico de formato: `make format`
+- Gate atómico de tipos: `make typecheck`
+- Tests unitarios: `make test-unit`
+- Tests de integración: `make test-integration`
+- Tests end-to-end: `make test-e2e`
+- Agregado local (unit + integration): `make test`
+- Orquestador equivalente CI: `make check`
+- CI (`.github/workflows/quality.yml`) ejecuta `make check` en push/PR.
+
+Orden recomendado antes de pushear:
+
+```sh
+make format
+make lint
+make typecheck
+make test
+# o en una sola corrida equivalente CI
+make check
+```
+
+### E2E snapshots y artifacts
+
+- Snapshots versionables: `tests/e2e/snapshots/`
+- Artifacts runtime no versionados (traces/videos/screenshots): `tests/artifacts/`
+- `make test-e2e` crea ambos directorios antes de ejecutar y exporta:
+  - `PLAYWRIGHT_SNAPSHOTS_DIR`
+  - `PLAYWRIGHT_ARTIFACTS_DIR`
+- Si aún no existen tests `e2e`, el target informa `No e2e tests collected` y finaliza en OK.
 
 ## Seed Baseline
 
