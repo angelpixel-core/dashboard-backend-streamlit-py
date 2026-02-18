@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
 [project]
 name = "dashboard-backend-streamlit-py"
 version = "0.1.0"
@@ -5,8 +9,52 @@ description = "Streamlit dashboard backend for Angel DevStack"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "pandas>=2.3.3",
-    "plotly>=6.5.2",
-    "streamlit>=1.54.0",
+  "streamlit>=1.54.0",
+  "pandas>=2.3.3",
+  "plotly>=6.5.2",
 ]
 
+[dependency-groups]
+dev = [
+  "ruff>=0.11.0",
+  "mypy>=1.15.0",
+  "pytest>=8.3.0",
+  "pytest-cov>=6.0.0",
+  "pytest-watch>=4.2.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dashboard"]
+
+[tool.ruff]
+line-length = 80
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "ANN", "PT"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+mypy_path = "src"
+packages = ["dashboard"]
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+addopts = "-q --maxfail=1 --cov=src/dashboard --cov-report=term-missing"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["src/dashboard"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
