@@ -43,6 +43,7 @@ interactivo fuera de `make`, por ejemplo cuando quieras usar directamente
 `python`, `pip` o una REPL.
 
 Detalle tecnico:
+
 - `source .venv/bin/activate` modifica la sesion actual del shell.
 - Los comandos de `make` corren en subshells y no pueden activar el entorno del shell padre.
 - Por eso este repo estandariza `uv run` como mecanismo de ejecucion.
@@ -136,7 +137,3 @@ Vista general:
 Interacción (tooltip/hover):
 
 ![Dashboard Tooltip Interaction](docs/assets/dashboard/interaction-tooltip.png)
-
-Captura adicional de referencia:
-
-![Dashboard Home Reference](docs/assets/01-home.png)
