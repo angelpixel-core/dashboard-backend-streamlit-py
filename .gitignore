@@ -35,6 +35,10 @@ pip-wheel-metadata/
 .coverage.*
 htmlcov/
 
+# E2E runtime artifacts (generated, not versioned)
+tests/artifacts/*
+!tests/artifacts/.gitkeep
+
 # Streamlit local secrets
 .streamlit/secrets.toml
 

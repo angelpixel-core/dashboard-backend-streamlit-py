@@ -47,9 +47,14 @@ packages = ["dashboard"]
 warn_unused_configs = true
 
 [tool.pytest.ini_options]
-addopts = "-q --maxfail=1 --cov=src/dashboard --cov-report=term-missing"
+addopts = "-q --maxfail=1 --strict-markers --cov=src/dashboard --cov-report=term-missing"
 testpaths = ["tests"]
 pythonpath = ["src"]
+markers = [
+  "unit: fast tests focused on pure domain/application behavior",
+  "integration: tests that touch adapters or external boundaries",
+  "e2e: end-to-end flows through the full app surface",
+]
 
 [tool.coverage.run]
 source = ["src/dashboard"]
