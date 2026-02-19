@@ -57,14 +57,21 @@ Detalle tecnico:
 ## Quality Gates
 
 - Gate atómico de lint: `make lint`
+- Fix automático de lint (ruff): `make lint-fix`
 - Gate atómico de formato: `make format`
+- Verificación sin escritura de formato: `make format-check`
 - Gate atómico de tipos: `make typecheck`
 - Tests unitarios: `make test-unit`
 - Tests de integración: `make test-integration`
 - Tests end-to-end: `make test-e2e`
 - Agregado local (unit + integration): `make test`
 - Orquestador equivalente CI: `make check`
+- Orquestador de fixes de estilo (sin tests): `make check-fix`
 - CI (`.github/workflows/quality.yml`) ejecuta `make check` en push/PR.
+
+Nota de uso:
+- No pasar flags directos a `make` (por ejemplo `make check --fix`).
+- Para acciones con escritura, usar targets explícitos (`make lint-fix`, `make check-fix`).
 
 Orden recomendado antes de pushear:
 
@@ -110,6 +117,14 @@ make check
 ### Evolucion recomendada
 
 - Cuando haya mas flujos reales y e2e estables, evaluar un gate liviano global (por ejemplo 70-80) para prevenir regresiones graves.
+- Regla de merge para core use cases: ver `docs/testing/core-unit-policy.md`.
+
+## Changelog / Updates
+
+- Dashboard lab: la vista Streamlit usa `GetDashboardDataUseCase` y un adapter
+  in-memory, para mantener el mock dataset fuera de presentation.
+- Filtros de mes y region aplican semantica combinatoria (AND) sobre un unico
+  dataset filtrado para tabla, metricas y charts.
 
 ## Seed Baseline
 
