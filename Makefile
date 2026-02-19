@@ -1,7 +1,7 @@
 E2E_ARTIFACTS_DIR ?= tests/artifacts
 E2E_SNAPSHOTS_DIR ?= tests/e2e/snapshots
 
-.PHONY: run lint format typecheck test-unit test-integration test-e2e test test-watch check ensure-e2e-dirs
+.PHONY: run lint lint-fix format format-check typecheck test-unit test-integration test-e2e test test-watch check check-fix ensure-e2e-dirs
 
 run:
 	uv run streamlit run app.py
@@ -9,8 +9,14 @@ run:
 lint:
 	uv run ruff check .
 
+lint-fix:
+	uv run ruff check . --fix
+
 format:
 	uv run ruff format .
+
+format-check:
+	uv run ruff format . --check
 
 typecheck:
 	uv run mypy src
@@ -41,3 +47,5 @@ test-watch:
 	uv run ptw -- -q
 
 check: lint typecheck test
+
+check-fix: lint-fix format lint typecheck
