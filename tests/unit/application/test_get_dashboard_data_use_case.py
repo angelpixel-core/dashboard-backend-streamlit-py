@@ -110,7 +110,7 @@ def test_get_dashboard_data_combines_month_and_regions() -> None:
     assert all(row.month == "Febrero" for row in result.rows)
 
 
-def test_get_dashboard_data_does_not_filter_when_regions_is_empty_or_none() -> None:
+def test_get_dashboard_data_skips_region_filter_when_empty_or_none() -> None:
     use_case = GetDashboardDataUseCase(
         reader=FakeDashboardDataReader(_sample_rows()),
     )

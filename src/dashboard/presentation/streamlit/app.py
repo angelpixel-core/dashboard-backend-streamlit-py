@@ -12,9 +12,9 @@ from dashboard.application import (
 )
 from dashboard.application.dto import DashboardDataRowDTO
 from dashboard.infrastructure.persistence import (
-    build_default_dashboard_data_reader,
     InMemorySalesAggregateReader,
     InMemorySalesRecord,
+    build_default_dashboard_data_reader,
 )
 from dashboard.presentation.streamlit.pages import render_sales_page
 from dashboard.presentation.streamlit.state import DashboardState
@@ -91,7 +91,9 @@ def _render_filtered_table(
     selected_month: str,
     selected_regions: list[str],
 ) -> None:
-    active_regions = ", ".join(selected_regions) if selected_regions else "Todas"
+    active_regions = (
+        ", ".join(selected_regions) if selected_regions else "Todas"
+    )
     st.caption(
         f"Filtros activos -> Mes: {selected_month} | Región: {active_regions}"
     )
@@ -141,7 +143,9 @@ def run_streamlit_app() -> None:
     dashboard_data_use_case = GetDashboardDataUseCase(
         reader=build_default_dashboard_data_reader(),
     )
-    all_dashboard_data = dashboard_data_use_case.execute(GetDashboardDataRequest())
+    all_dashboard_data = dashboard_data_use_case.execute(
+        GetDashboardDataRequest(),
+    )
     all_dashboard_df = _rows_to_dataframe(all_dashboard_data.rows)
 
     _render_executive_header()

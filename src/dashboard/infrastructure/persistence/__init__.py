@@ -1,7 +1,7 @@
 from .in_memory_dashboard_data_reader import (
-    build_default_dashboard_data_reader,
     InMemoryDashboardDataReader,
     InMemoryDashboardDataRecord,
+    build_default_dashboard_data_reader,
 )
 from .in_memory_sales_repo import (
     InMemorySalesAggregateReader,
