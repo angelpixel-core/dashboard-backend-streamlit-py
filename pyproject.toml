@@ -46,6 +46,19 @@ mypy_path = "src"
 packages = ["dashboard"]
 warn_unused_configs = true
 
+[[tool.mypy.overrides]]
+module = [
+  "pandas",
+  "pandas.*",
+  "plotly",
+  "plotly.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["dashboard.presentation.streamlit.app"]
+disable_error_code = ["import-untyped"]
+
 [tool.pytest.ini_options]
 addopts = "-q --maxfail=1 --strict-markers --cov=src/dashboard --cov-report=term-missing"
 testpaths = ["tests"]

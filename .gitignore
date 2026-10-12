@@ -39,8 +39,9 @@ htmlcov/
 tests/artifacts/*
 !tests/artifacts/.gitkeep
 
-# Streamlit local secrets
-.streamlit/secrets.toml
+# Streamlit local config
+.streamlit/*
+!.streamlit/config.toml
 
 # Logs
 *.log
