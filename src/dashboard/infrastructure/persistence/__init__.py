@@ -8,6 +8,11 @@ from .in_memory_sales_repo import (
     InMemorySalesRecord,
 )
 from .sqlalchemy_sales_repo import SqlAlchemySalesAggregateReader
+from .synthetic_ecommerce_data import (
+    InMemoryEcommerceDataReader,
+    SyntheticEcommerceDataGenerator,
+    build_synthetic_ecommerce_reader,
+)
 
 __all__ = [
     "InMemoryDashboardDataRecord",
@@ -16,4 +21,7 @@ __all__ = [
     "InMemorySalesRecord",
     "InMemorySalesAggregateReader",
     "SqlAlchemySalesAggregateReader",
+    "SyntheticEcommerceDataGenerator",
+    "InMemoryEcommerceDataReader",
+    "build_synthetic_ecommerce_reader",
 ]
