@@ -29,10 +29,7 @@ class GetDashboardDataUseCase(GetDashboardDataPort):
             for row in rows
             if (
                 (selected_month is None or row.month == selected_month)
-                and (
-                    not selected_regions
-                    or row.region in selected_regions
-                )
+                and (not selected_regions or row.region in selected_regions)
             )
         )
         return DashboardDataDTO(rows=filtered_rows)
